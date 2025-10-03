@@ -70,7 +70,7 @@ ln -s ${datapath_aging}/${sample_name}.fastq
 ln -s ${datapath_aging}/${sample_name}.fastq 
 module unload FastQC/0.11.8
 ### Align reads with STAR:
-${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/scripts/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
+${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/output/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
 --readFilesIn ${datapath_aging}/${sample_name}.fastq  \
 --readFilesCommand zcat \
 --runThreadN 8 \
@@ -133,7 +133,7 @@ picard AddOrReplaceReadGroups \
     --RGSM ${sample_name}\
     --SORT_ORDER coordinate
 
- ${java} -Djava.io.tmpdir=/home/abportillo/github_repo/RNA_seq_Bcell/scripts/raw_fastq_bcell/rnaPreprocess/temp \
+ ${java} -Djava.io.tmpdir=/home/abportillo/github_repo/Aging/fastq/rnaPreprocess/temp \
   -jar /home/abportillo/.conda/envs/mamba_abner_BC/share/picard-3.3.0-0/picard.jar MarkDuplicates \
   --INPUT ${outdir}/${sample_name}_rg_sorted.bam --OUTPUT ${outdir}/${sample_name}_nr_sorted.bam \
  --REMOVE_DUPLICATES true --READ_NAME_REGEX null --METRICS_FILE ${outdir}/${sample_name}_picardStats.txt
