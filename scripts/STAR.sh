@@ -11,14 +11,14 @@ source /path/to/config.sh
 mkdir -p ${outdir}/fastqc_out
 module load FastQC/0.11.8
 fastqc -t 8 -o ${outdir}/fastqc_out \
-${datapath_aging}/${sample_name}_1.fastq.gz ${datapath_aging}/${sample_name}_2.fastq.gz
+${datapath_aging}/${sample_name}.fastq.gz 
 
-ln -s ${datapath_aging}/${sample_name}_1.fastq.gz ${outdir}/${sample_name}_R1.fastq.gz
-ln -s ${datapath_aging}/${sample_name}_2.fastq.gz ${outdir}/${sample_name}_R2.fastq.gz
+ln -s ${datapath_aging}/${sample_name}.fastq.gz 
+
 module unload FastQC/0.11.8
 ### Align reads with STAR:
 ${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/scripts/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
---readFilesIn ${datapath_aging}/${sample_name}_1.fastq.gz ${datapath_aging}/${sample_name}_2.fastq.gz \
+--readFilesIn ${datapath_aging}/${sample_name}.fastq.gz \
 --readFilesCommand zcat \
 --runThreadN 8 \
 --twopassMode Basic \

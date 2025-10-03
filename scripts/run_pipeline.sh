@@ -24,8 +24,8 @@ if [ ! -f "$samples" ]; then
 fi
 
 # Define paths
-datapath_aging=/home/abportillo/github_repo/Aging/bz2
-base_outdir=${datapath_aging}/rnaPreprocess
+datapath=/home/abportillo/github_repo/Aging/bz2
+base_outdir=${datapath}/rnaPreprocess
 
 # Create logs directory if it doesn't exist
 mkdir -p logs
@@ -40,16 +40,16 @@ while IFS= read -r sample_name; do
 
   {
     echo "=== STAR ==="
-    bash scripts/STAR.sh "$sample_name" "$datapath_aging" "$outdir"
+    bash scripts/STAR.sh "$sample_name" "$datapath" "$outdir"
 
     echo "=== Sorting ==="
-    bash scripts/sorting.sh "$sample_name" "$datapath_aging" "$outdir"
+    bash scripts/sorting.sh "$sample_name" "$datapath" "$outdir"
 
     echo "=== Split Strands ==="
-    bash scripts/split_strands.sh "$sample_name" "$datapath_aging" "$outdir"
+    bash scripts/split_strands.sh "$sample_name" "$datapath" "$outdir"
 
     echo "=== Coverage ==="
-    bash scripts/coverage.sh "$sample_name" "$datapath_aging" "$outdir"
+    bash scripts/coverage.sh "$sample_name" "$datapath" "$outdir"
 
     echo "=== DONE ==="
   } &> "$log_file"
