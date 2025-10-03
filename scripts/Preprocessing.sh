@@ -212,7 +212,7 @@ ${bamCoverage} -b ${outdir}/${sample_name}_watson_merged.bam \
 rm ${outdir}/*.bedGraph
 conda deactivate"
   } > "${outdir}/${sample_name}_rnaPreprocess.sh"
- cd ${outdir}
+ cd "${outdir}"
  sbatch "${sample_name}_rnaPreprocess.sh"
 done < ${samples}
 
