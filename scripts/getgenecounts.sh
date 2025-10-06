@@ -45,9 +45,9 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 #### gene level counts ###########################################################################################
 
-${featureCounts} -B -p --countReadPairs -Q 30 -s 2 -T 8 -a ${hg38_transcriptGTF} \
+${featureCounts} -Q 30 -s 2 -T 8 -a ${hg38_transcriptGTF} \
 -o ${outdir}/${sample_name}/${sample_name}_gene_counts.txt \
-${datapath_aging}/${sample_name}_crick_merged.bam ${datapath_aging}/${sample_name}_watson_merged.bam
+${datapath_aging}/${sample_name}_sorted.bam
 
 conda deactivate"
   } > ${outdir}/${sample_name}/${sample_name}_rnaGetGeneCounts.sh
