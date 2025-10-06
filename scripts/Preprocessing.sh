@@ -26,9 +26,9 @@ while IFS= read -r sample_name; do
   ## data path
   ## we can soft-link all data to a data folder, so we can use it more conveniently
   datapath_aging=/home/abportillo/github_repo/Aging/fastq
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnaPreprocess
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnaPreprocess/${sample_name}
-  outdir=/home/abportillo/github_repo/Aging/fastq/rnaPreprocess/${sample_name}
+  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess
+  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreproces/${sample_name}
+  outdir=/home/abportillo/github_repo/Aging/fastq/rnapreproces/${sample_name}
   
   # software
   # fastqc=/home/qwan/miniconda3/envs/coh/bin/fastqc
@@ -47,7 +47,7 @@ while IFS= read -r sample_name; do
 
   {
     echo -e "#!/bin/bash
-#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar
+#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=abportillo@coh.org
 #SBATCH -n 16 # Number of cores
@@ -55,7 +55,7 @@ while IFS= read -r sample_name; do
 #SBATCH -p all
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
-#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_%j.log
+#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_%j.log
 
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
@@ -66,12 +66,12 @@ module load FastQC/0.11.8
 fastqc -t 8 -o ${outdir}/fastqc_out \
 ${datapath_aging}/${sample_name}.fastq
 
-ln -s ${datapath_aging}/${sample_name}.fastq 
+ln -s ${datapath_aging}/${sample_name}.fastq
 
 module unload FastQC/0.11.8
 ### Align reads with STAR:
-${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/output/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
---readFilesIn ${datapath_aging}/${sample_name}.fastq  \
+${STAR} --genomeDir /net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/hg38_2024/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
+--readFilesIn ${outdir}/${sample_name}.fastq  \
 --runThreadN 8 \
 --twopassMode Basic \
 --outFilterMultimapNmax 20 \
@@ -115,7 +115,7 @@ ${samtools} index ${outdir}/${sample_name}_sorted.bam
 rm ${outdir}/${sample_name}_Aligned.out.bam
 
 ### sort by coordinates, Remove duplicates and sort
-# module load picard/2.21.1
+module load picard/2.21.1
 picard MarkDuplicates \\
     I=${outdir}/${sample_name}_sorted.bam \\
     O=${outdir}/${sample_name}_nr_sorted.bam  \\
@@ -132,7 +132,7 @@ picard AddOrReplaceReadGroups \
     --RGSM ${sample_name}\
     --SORT_ORDER coordinate
 
- ${java} -Djava.io.tmpdir=/home/abportillo/github_repo/Aging/fastq/rnaPreprocess/temp \
+ ${java} -Djava.io.tmpdir=/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/Abner/temp \
   -jar /home/abportillo/.conda/envs/mamba_abner_BC/share/picard-3.3.0-0/picard.jar MarkDuplicates \
   --INPUT ${outdir}/${sample_name}_rg_sorted.bam --OUTPUT ${outdir}/${sample_name}_nr_sorted.bam \
  --REMOVE_DUPLICATES true --READ_NAME_REGEX null --METRICS_FILE ${outdir}/${sample_name}_picardStats.txt
@@ -217,4 +217,8 @@ conda deactivate"
 done < ${samples}
 
 echo "All sample_name script files created successfully."
+
+
+
+
 
