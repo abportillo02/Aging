@@ -31,7 +31,7 @@ while IFS= read -r sample_name; do
   bamCoverage=/home/abportillo/.conda/envs/mamba_abner_BC/bin/bamCoverage
   samtools=/home/abportillo/.conda/envs/mamba_abner_BC/bin/samtools
   STAR=/home/abportillo/.conda/envs/mamba_abner_BC/bin/STAR
-  picard=/home/abportillo/.conda/envs/mamba_abner_BC/bin/picard
+  # picard=/home/abportillo/.conda/envs/mamba_abner_BC/bin/picard
   wigToBigWig=/home/abportillo/.conda/envs/mamba_abner_BC/bin/wigToBigWig
 
   {
