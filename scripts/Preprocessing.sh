@@ -27,8 +27,8 @@ while IFS= read -r sample_name; do
   ## we can soft-link all data to a data folder, so we can use it more conveniently
   datapath_aging=/home/abportillo/github_repo/Aging/fastq
   mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreproces/${sample_name}
-  outdir=/home/abportillo/github_repo/Aging/fastq/rnapreproces/${sample_name}
+  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
+  outdir=/home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
   
   # software
   # fastqc=/home/qwan/miniconda3/envs/coh/bin/fastqc
@@ -211,7 +211,7 @@ ${bamCoverage} -b ${outdir}/${sample_name}_watson_merged.bam \
 
 rm ${outdir}/*.bedGraph
 conda deactivate"
-  } > ${outdir}/${sample_name}_rnaPreprocess.sh
+  } > "${outdir}/${sample_name}_rnaPreprocess.sh"
 #  cd ${outdir}
 #  sbatch ${sample_name}_rnaPreprocess.sh
 done < ${samples}
