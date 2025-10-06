@@ -60,7 +60,7 @@ ln -s ${datapath_aging}/${sample_name}.fastq
 module unload FastQC/0.11.8
 ### Align reads with STAR:
 ${STAR} --genomeDir /net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/hg38_2024/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
---readFilesIn ${outdir}/${sample_name}.fastq  \
+--readFilesIn ${datapath_aging}/${sample_name}.fastq  \
 --runThreadN 8 \
 --twopassMode Basic \
 --outFilterMultimapNmax 20 \
