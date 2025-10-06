@@ -1,9 +1,5 @@
 #!/bin/sh
 
-# run allo after deduplication in this round of analysis, and consider SJ (splice introns out when
-# summing uniquely mapped reads)
-# use TCGA 2passSTAR alignment and use hg38.p14 without patches
-
 # Check if the input file is provided
 if [ -z "$1" ]; then
   echo "Usage: $0 <input_file>"
@@ -30,14 +26,7 @@ while IFS= read -r sample_name; do
   mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
   outdir=/home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
   
-  # software
-  # fastqc=/home/qwan/miniconda3/envs/coh/bin/fastqc
-  # fastp=/home/qwan/miniconda3/envs/coh/bin/fastp
-  # allo=/home/qwan/miniconda3/envs/coh/bin/allo
-  # samtools=/home/qwan/miniconda3/envs/coh/bin/samtools
-  # java=/home/qwan/miniconda3/envs/coh/bin/java
-  # bedtools=/home/qwan/miniconda3/envs/coh/bin/bedtools
-
+  
   java=/home/abportillo/.conda/envs/mamba_abner_BC/bin/java
   bamCoverage=/home/abportillo/.conda/envs/mamba_abner_BC/bin/bamCoverage
   samtools=/home/abportillo/.conda/envs/mamba_abner_BC/bin/samtools
@@ -211,10 +200,10 @@ ${bamCoverage} -b ${outdir}/${sample_name}_watson_merged.bam \
 
 rm ${outdir}/*.bedGraph
 conda deactivate"
-  } > "${outdir}/${sample_name}_rnaPreprocess.sh"
+  } > ${outdir}/${sample_name}_rnaPreprocess.sh
 #  cd ${outdir}
 #  sbatch ${sample_name}_rnaPreprocess.sh
-done < "${samples}"
+done < ${samples}
 
 echo "All sample_name script files created successfully."
 
