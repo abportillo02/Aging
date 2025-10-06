@@ -55,8 +55,6 @@ module load FastQC/0.11.8
 fastqc -t 8 -o ${outdir}/fastqc_out \
 ${datapath_aging}/${sample_name}.fastq
 
-ln -s ${datapath_aging}/${sample_name}.fastq
-
 module unload FastQC/0.11.8
 ### Align reads with STAR:
 ${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/scripts/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
