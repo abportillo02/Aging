@@ -214,7 +214,7 @@ conda deactivate"
   } > "${outdir}/${sample_name}_rnaPreprocess.sh"
 #  cd ${outdir}
 #  sbatch ${sample_name}_rnaPreprocess.sh
-done < ${samples}
+done < "${samples}"
 
 echo "All sample_name script files created successfully."
 
