@@ -18,8 +18,8 @@ while IFS=" " read -r sample_name path; do
   echo "Creating bash script for sample: $sample_name"
   ## data path
   datapath_aging=/home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess/gene_counts
-  outdir=/home/abportillo/github_repo/Aging/fastq/rnapreprocess/gene_counts
+  mkdir -p /home/abportillo/github_repo/Aging/fastq/gene_counts
+  outdir=/home/abportillo/github_repo/Aging/fastq/gene_counts
   ## make directory for each sample
   mkdir -p ${outdir}/${sample_name}
   ## software
