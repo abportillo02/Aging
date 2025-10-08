@@ -15,4 +15,4 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 
 # Run the Python script
-python /home/abportillo/github_repo/Aging/scripts/getTEtxReadCountsGencode2.py sampleNames.txt /home/abportillo/github_repo/Aging/fastq/Gencode_TE_counts/Gencode_TE_transcripts.bed
+python /home/abportillo/github_repo/Aging/scripts/getTEtxReadCountsGencode2.py sampleNames.txt /home/abportillo/github_repo/Aging/fastq/counts_tx /home/abportillo/github_repo/Aging/fastq/Gencode_TE_counts/Gencode_TE_transcripts.bed
