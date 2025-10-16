@@ -36,7 +36,7 @@ while IFS= read -r sample_name; do
 
   {
     echo -e "#!/bin/bash
-#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe
+#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_bigwig
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=abportillo@coh.org
 #SBATCH -n 16 # Number of cores
@@ -103,7 +103,7 @@ while IFS= read -r sample_name; do
 
 ### sort by coordinates, Remove duplicates and sort
 
-module load picard/2.21.1
+# module load picard/2.21.1
 # picard MarkDuplicates \\
 #     I=${outdir}/${sample_name}_sorted.bam \\
 #     O=${outdir}/${sample_name}_nr_sorted.bam  \\
