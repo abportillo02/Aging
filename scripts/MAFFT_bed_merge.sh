@@ -18,14 +18,13 @@ outdir="/home/abportillo/github_repo/Aging/mafft"
 bedtools="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 
 
+# Extract first 4 columns from hg19-elife-datafile.txt (LTR7up elements)
+awk 'NR>1 {print $1"\t"$2"\t"$3"\tLTR" $4}' hg19-elife-datafile.txt > "${outdir}/ltr7up_labeled.bed"
 
-# Step 1: Extract LTR7up coordinates
-awk -F'\t' '$4 ~ /7up1/ {print $1"\t"$2"\t"$3}' /home/abportillo/github_repo/Aging/mafft/hg19-elife-datafile.txt > "${outdir}/ltr7up.bed"
+# Add "HERVH" label to all entries in HERVH-DMRs.bed
+awk '{print $1"\t"$2"\t"$3"\tHERVH"}' HERVH-DMRs.bed > "${outdir}/hervh_labeled.bed"
 
-# Step 2: Extract HERVH-DMRs coordinates
-cut -f1-3 /home/abportillo/github_repo/Aging/mafft/HERVH-DMRs.bed > "${outdir}/hervh_dmrs.bed"
+# Concatenate both into a unified BED file
+cat ltr7up_labeled.bed hervh_labeled.bed > "${outdir}/merged_ltrs_labeled.bed"
 
-# Step 3: Concatenate both BED files
-cat "${outdir}/ltr7up.bed" "${outdir}/hervh_dmrs.bed" > "${outdir}/merged.bed"
-
-echo "Merged BED file created: ${outdir}/merged.bed"
+echo "Merged BED file created: ${outdir}/merged_ltrs_labeled.bed"
