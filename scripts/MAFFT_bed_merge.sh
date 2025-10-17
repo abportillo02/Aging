@@ -25,7 +25,7 @@ awk -F'\t' '$4 ~ /7up1/ {print $1"\t"$2"\t"$3}' /home/abportillo/github_repo/Agi
 # Step 2: Extract HERVH-DMRs coordinates
 cut -f1-3 /home/abportillo/github_repo/Aging/mafft/HERVH-DMRs.bed > "${outdir}/hervh_dmrs.bed"
 
-# Step 3: Combine and merge
-cat "${outdir}/ltr7up.bed" "${outdir}/hervh_dmrs.bed" | sort -k1,1 -k2,2n | ${bedtools} merge > "${outdir}/merged.bed"
+# Step 3: Concatenate both BED files
+cat "${outdir}/ltr7up.bed" "${outdir}/hervh_dmrs.bed" > "${outdir}/merged.bed"
 
 echo "Merged BED file created: ${outdir}/merged.bed"
