@@ -44,7 +44,7 @@ while IFS= read -r sample_name; do
 #SBATCH -p all
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
-#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_%j.log
+#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_bigwig_%j.log
 
 # source /home/abportillo/.bashrc
 # conda activate /home/abportillo/.conda/envs/mamba_abner_BC
