@@ -25,6 +25,6 @@ awk 'NR>1 {print $1"\t"$2"\t"$3"\tLTR" $4}' /home/abportillo/github_repo/Aging/m
 awk '{print $1"\t"$2"\t"$3"\tHERVH"}' /home/abportillo/github_repo/Aging/mafft/HERVH-DMRs.bed > "${outdir}/hervh_labeled.bed"
 
 # Concatenate both into a unified BED file
-cat ltr7up_labeled.bed hervh_labeled.bed > "${outdir}/merged_ltrs_labeled.bed"
+cat "${outdir}/ltr7up_labeled.bed" "${outdir}/hervh_labeled.bed" > "${outdir}/merged_ltrs_labeled.bed"
 
 echo "Merged BED file created: ${outdir}/merged_ltrs_labeled.bed"
