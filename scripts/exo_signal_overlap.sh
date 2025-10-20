@@ -18,5 +18,5 @@ MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled.bed"
 BEDTOOLS="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
-# Step 1: Intersect TE regions with ChIP-exo peaks and keep both sets of columns
-${BEDTOOLS} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -wa -wb > "${OUTDIR}/ZNF90_TE_peak_overlap.txt"
+# Step 1: Intersect TE regions with ChIP-exo peaks, keep all TE rows even if no overlap
+${BEDTOOLS} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -loj > "${OUTDIR}/ZNF90_TE_peak_overlap.txt"
