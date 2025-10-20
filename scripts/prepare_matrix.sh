@@ -19,7 +19,6 @@ COUNTS="/home/abportillo/github_repo/Aging/overlap/ZNF90_counts.txt"
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
 
-# Building matrix 
+# Preparing matrix 
 echo -e "KZFP\tLTR7up1\tLTR7up2\tHERVH" > matrix.txt
-awk 'BEGIN{OFS="\t"} {a[$1]=$2} END{print "ZNF90", a["LTR7up1"], a["LTR7up2"], a["HERVH"]}'${COUNTS} >> ${OUTDIR}/matrix.txt
-
+awk 'BEGIN{OFS="\t"} {a[$1]=$2} END{print "ZNF90", a["LTR7up1"], a["LTR7up2"], a["HERVH"]}' /home/abportillo/github_repo/Aging/overlap/ZNF90_counts.txt >> ${OUTDIR}/matrix.txt 
