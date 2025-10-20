@@ -21,5 +21,5 @@ OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
 
 # Intersect labeled LTRs with a KZFP ChIP-exo peak file 
-$bedtools intersect -a ${MERGED_BED} -b ${CHIP_EXO} -wa -wb -loj \
+${bedtools} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -wa -wb -loj \
 | sed 's/-1/0/g' > "${OUTDIR}/ZNF90_LTR_overlap_full.bed"
