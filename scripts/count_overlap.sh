@@ -18,4 +18,4 @@ ZNF90_BED="/home/abportillo/github_repo/Aging/overlap/ZNF90_LTR_overlap_full.bed
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
 # Counting overlaps 
-awk '$10 != . {print $4}' ${ZNF90_BED} | sort | uniq -c | awk '{print $2"\t"$1}' > ${OUTDIR}/ZNF90_counts.txt
+awk '$10 != "." {print $4}' ${ZNF90_BED} | sort | uniq -c | awk '{print $2"\t"$1}' > ${OUTDIR}/ZNF90_counts.txt
