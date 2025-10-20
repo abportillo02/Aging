@@ -10,7 +10,6 @@
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
 
-
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
@@ -19,7 +18,9 @@ CHIP_EXO="/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/projects/PMM/
 MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled.bed"
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
+# Intersect labeled LTRs with a KZFP ChIP-exo peak file, include non-overlapping entries
+${BEDTOOLS} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -wa -wb -loj \
+| awk 'BEGIN{OFS="\t"} {for(i=5;i<=NF;i++){if($i=="-1") $i=0} print}' \
+> "${OUTDIR}/ZNF90_LTR_overlap_full.bed"
 
-# Intersect labeled LTRs with a KZFP ChIP-exo peak file 
-${bedtools} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -wa -wb -loj \
-| sed 's/-1/0/g' > "${OUTDIR}/ZNF90_LTR_overlap_full.bed"
+echo "Full overlap file created: ${OUTDIR}/ZNF90_LTR_overlap_full.bed"
