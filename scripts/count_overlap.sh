@@ -14,7 +14,7 @@
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
-ZNF90_BED="/home/abportillo/github_repo/Aging/overlap/ZNF90_LTR_overlap.bed"
+ZNF90_BED="/home/abportillo/github_repo/Aging/overlap/ZNF90_LTR_overlap_full.bed"
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
 # Counting overlaps 
