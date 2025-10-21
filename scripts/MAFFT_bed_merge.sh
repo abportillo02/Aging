@@ -19,7 +19,7 @@ bedtools="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 
 
 # Extract first 4 columns from hg19-elife-datafile.txt (LTR7up elements)
-awk 'NR>1 {print $1"\t"$2"\t"$3"\tLTR" $4}' /home/abportillo/github_repo/Aging/mafft/hg19-elife-datafile.txt > "${outdir}/ltr7up_labeled.bed"
+awk 'NR>1 && ($4 == "7up1" || $4 == "7up2") {print $1"\t"$2"\t"$3"\tLTR" $4}' /home/abportillo/github_repo/Aging/mafft/hg19-elife-datafile.txt > "${outdir}/ltr7up_labeled.bed"
 
 # Add "HERVH" label to all entries in HERVH-DMRs.bed
 awk '{print $1"\t"$2"\t"$3"\tHERVH"}' /home/abportillo/github_repo/Aging/mafft/HERVH-DMRs.bed > "${outdir}/hervh_labeled.bed"
