@@ -15,7 +15,7 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 BEDTOOLS="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 REFERENCE_FASTA="/home/abportillo/genomes/hg19/hg19.fa"
-MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled_named.bed"
+MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled.bed"
 OUTDIR="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.fasta"
 
 ${BEDTOOLS} getfasta -fi ${REFERENCE_FASTA} -bed ${MERGED_BED} -fo ${OUTDIR} -name
