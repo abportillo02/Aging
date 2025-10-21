@@ -14,4 +14,4 @@ source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 mafft="/home/abportillo/.conda/envs/mamba_abner_BC/bin/mafft"
 
-${mafft} --auto --thread 16 /home/abportillo/github_repo/Aging/mafft/hervh.fasta > /home/abportillo/github_repo/Aging/mafft/hervh_aligned.fasta
+${mafft} --auto --thread 16 /home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.fasta > /home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta
