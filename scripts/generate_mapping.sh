@@ -14,4 +14,4 @@
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
-python TE_split_file_1.py
+python mapping.py
