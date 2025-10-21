@@ -14,10 +14,11 @@ source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 CHIP_EXO="/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/projects/PMM/chipExo/GSE78099/GSM2466684_ZNF90_peaks_processed_score_signal_exo.bed.gz"
-MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled.bed"
+SPLIT_FILE="/home/abportillo/github_repo/Aging/overlap/TE_split.txt"
 BEDTOOLS="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 OUTDIR="/home/abportillo/github_repo/Aging/overlap"
 
 # Step 1: Intersect TE regions with ChIP-exo peaks, keep all TE rows even if no overlap
-${BEDTOOLS} intersect -a ${MERGED_BED} -b ${CHIP_EXO} -loj | \
-awk 'BEGIN{OFS="\t"} {for(i=1;i<=NF;i++){if($i=="-1") $i=0}; print}' > "${OUTDIR}/ZNF90_TE_peak_overlap.txt"
+
+${BEDTOOLS} intersect -a ${SPLIT_FILE} -b ${CHIP_EXO} -loj | \
+awk 'BEGIN{OFS="\t"} {score=$NF; if(score=="-1") score=0; print $1,$2,score}' > ${OUTDIR}/temp-ZNF90.counts
