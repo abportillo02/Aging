@@ -10,7 +10,7 @@
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
 
-module load python/3.9
+
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
