@@ -14,4 +14,4 @@ module load python/3.9
 source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
-python generate_split.py
+python TE_split_file_1.py
