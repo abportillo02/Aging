@@ -45,10 +45,13 @@ def map_signal_to_alignment(aligned_seq, signal_vector):
         if base == "-":
             aligned_signal.append(0)
         else:
-            aligned_signal.append(signal_vector[seq_index])
+            if seq_index < len(signal_vector):
+                aligned_signal.append(signal_vector[seq_index])
+            else:
+                aligned_signal.append(0)  # fallback if signal_vector is too short
             seq_index += 1
     return aligned_signal
-
+    
 # --- Build signal matrix ---
 signal_matrix = {}
 
