@@ -26,9 +26,7 @@ for interval in bed:
 chip_bed = pybedtools.BedTool("/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/projects/PMM/chipExo/GSE78099/GSM2466684_ZNF90_peaks_processed_score_signal_exo.bed.gz")
 
 # Get signal vector per base (using MACS peak score) 
-def get_signal_vector(chrom, start, end, chip_bed, window=5):
-    def get_signal_vector(chrom, start, end, chip_bed, window=5):
-    
+def get_signal_vector(chrom, start, end, chip_bed):
     region = pybedtools.BedTool([pybedtools.create_interval_from_list([chrom, str(start), str(end)])])
     signal = chip_bed.intersect(region, wa=True)
 
@@ -36,23 +34,10 @@ def get_signal_vector(chrom, start, end, chip_bed, window=5):
     for interval in signal:
         score = float(interval.score)
         center = (interval.start + interval.end) // 2
-        # Apply score to center ± window bp
-        for i in range(center - window, center + window + 1):
-            if start <= i < end:
-                signal_vector[i - start] += score
+        if start <= center < end:
+            signal_vector[center - start] += score
     return signal_vector
-    region = pybedtools.BedTool([pybedtools.create_interval_from_list([chrom, str(start), str(end)])])
-    signal = chip_bed.intersect(region, wa=True)
 
-    signal_vector = [0.0] * (end - start)
-    for interval in signal:
-        score = float(interval.score)
-        center = (interval.start + interval.end) // 2
-        # Apply score to center ± window bp
-        for i in range(center - window, center + window + 1):
-            if start <= i < end:
-                signal_vector[i - start] += score
-    return signal_vector
 
 #  Map signal to aligned sequence 
 def map_signal_to_alignment(aligned_seq, signal_vector):
