@@ -16,16 +16,11 @@ while read line; do
         chr=$(echo "$full" | grep -o 'chr[^_]*' | sed 's/chr//')
 
         base="${family}_c${chr}"
+        count=${name_count[$base]:-1}
+        name_count[$base]=$((count + 1))
 
-        # Add suffix if name already used
-        if [[ -n "${name_count[$base]}" ]]; then
-            suffix=$(printf \\$(printf '%03o' $((97 + name_count[$base]))))  # a, b, c...
-            short="${base:0:7}$suffix"
-            name_count[$base]=$((name_count[$base] + 1))
-        else
-            short="${base:0:10}"
-            name_count[$base]=1
-        fi
+        short="${base}${count}"
+        short="${short:0:10}"  # final truncation to 10 characters
 
         echo ">$short" >> "$output"
         echo -e "$short\t$full" >> "$mapping"
