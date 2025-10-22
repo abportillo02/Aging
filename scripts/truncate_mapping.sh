@@ -7,25 +7,19 @@ mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
 > "$output"
 > "$mapping"
 
-declare -A used_names
-
 while read line; do
     if [[ "$line" == ">"* ]]; then
-        full_name="${line#>}"
-        base="${full_name:0:10}"
+        full=${line#>}
+        name=$(echo "$full" | cut -d'_' -f1)      # e.g., LTR7up1 or HERVH
+        chr=$(echo "$full" | grep -o 'chr[^_]*')  # e.g., chr8, chrX
 
-        # Make sure the name is unique
-        if [[ -n "${used_names[$base]}" ]]; then
-            count=${used_names[$base]}
-            new_name="${base:0:9}$count"
-            used_names[$base]=$((count + 1))
-        else
-            new_name="$base"
-            used_names[$base]=2
-        fi
+        short="${name}_c${chr#chr}"               # e.g., LTR7up1_c8
 
-        echo ">$new_name" >> "$output"
-        echo -e "$new_name\t$full_name" >> "$mapping"
+        # truncate to 10 characters if needed
+        short="${short:0:10}"
+
+        echo ">$short" >> "$output"
+        echo -e "$short\t$full" >> "$mapping"
     else
         echo "$line" >> "$output"
     fi
