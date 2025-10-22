@@ -3,7 +3,7 @@ import json
 import os
 
 # Define input and output paths
-input_path = "/home/abportillo/github_repo/Aging/motif_binding/ltr7up_hervh.phy"
+input_path = "/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.phy"
 output_dir = "/home/abportillo/github_repo/Aging/motif_binding"
 output_file = os.path.join(output_dir, "aligned_sequences.json")
 
