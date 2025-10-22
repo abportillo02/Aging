@@ -51,7 +51,7 @@ def map_signal_to_alignment(aligned_seq, signal_vector):
                 aligned_signal.append(0)  # fallback if signal_vector is too short
             seq_index += 1
     return aligned_signal
-    
+
 # --- Build signal matrix ---
 signal_matrix = {}
 
@@ -68,3 +68,10 @@ for i, seq_id in enumerate(aligned_sequences):
         aligned_signal = map_signal_to_alignment(aligned_sequences[seq_id], signal_vector)
 
     signal_matrix[seq_id] = aligned_signal
+
+
+# Save signal matrix to a file
+with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix.json", "w") as f:
+    json.dump(signal_matrix, f, indent=2)
+
+print("Signal matrix saved to motif_binding/signal_matrix.json")
