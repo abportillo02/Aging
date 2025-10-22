@@ -34,7 +34,7 @@ def get_signal_vector(chrom, start, end, chip_bed):
     for interval in signal:
         for i in range(interval.start, interval.end):
             if start <= i < end:
-                signal_vector[i - start] = min(signal_vector[i - start] + 1, 30)
+                signal_vector[i - start] += 1
     return signal_vector
 
 # --- Map signal to aligned sequence ---
