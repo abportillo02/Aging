@@ -10,13 +10,11 @@ mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
 while read line; do
     if [[ "$line" == ">"* ]]; then
         full=${line#>}
-        name=$(echo "$full" | cut -d'_' -f1)      # e.g., LTR7up1 or HERVH
-        chr=$(echo "$full" | grep -o 'chr[^_]*')  # e.g., chr8, chrX
+        family=$(echo "$full" | cut -d'_' -f1 | sed 's/LTR//')  # remove LTR prefix
+        chr=$(echo "$full" | grep -o 'chr[^_]*' | sed 's/chr//')  # extract chromosome
 
-        short="${name}_c${chr#chr}"               # e.g., LTR7up1_c8
-
-        # truncate to 10 characters if needed
-        short="${short:0:10}"
+        short="${family}_c${chr}"
+        short="${short:0:10}"  # truncate to 10 characters if needed
 
         echo ">$short" >> "$output"
         echo -e "$short\t$full" >> "$mapping"
