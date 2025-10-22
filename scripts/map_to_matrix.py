@@ -23,7 +23,7 @@ for interval in bed:
     bed_lookup[name].append((interval.chrom, interval.start, interval.end))
 
 # --- Load ChIP-exo signal BED file ---
-chip_bed = pybedtools.BedTool("/home/abportillo/github_repo/Aging/motif_binding/ZNF90_chip_exo.bed")
+chip_bed = pybedtools.BedTool("/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/projects/PMM/chipExo/GSE78099/GSM2466684_ZNF90_peaks_processed_score_signal_exo.bed.gz")
 
 # --- Get signal vector per base ---
 def get_signal_vector(chrom, start, end, chip_bed):
