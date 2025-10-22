@@ -6,7 +6,7 @@ with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix.json")
     signal_matrix = json.load(f)
 
 mapping = {}
-with open("name_mapping.tsv") as f:
+with open("/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv") as f:
     for line in f:
         seq_id, name = line.strip().split()
         mapping[seq_id] = name
