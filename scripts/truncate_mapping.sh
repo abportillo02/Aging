@@ -7,23 +7,25 @@ mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
 > "$output"
 > "$mapping"
 
-declare -A names
+declare -A used_names
 
 while read line; do
     if [[ "$line" == ">"* ]]; then
-        full=${line#>}
-        short=${full:0:10}
+        full_name="${line#>}"
+        base="${full_name:0:10}"
 
-        if [[ -n "${names[$short]}" ]]; then
-            count=${names[$short]}
-            short="${short:0:9}$count"
-            names[$short]=$((count + 1))
+        # Make sure the name is unique
+        if [[ -n "${used_names[$base]}" ]]; then
+            count=${used_names[$base]}
+            new_name="${base:0:9}$count"
+            used_names[$base]=$((count + 1))
         else
-            names[$short]=1
+            new_name="$base"
+            used_names[$base]=2
         fi
 
-        echo ">$short" >> "$output"
-        echo -e "$short\t$full" >> "$mapping"
+        echo ">$new_name" >> "$output"
+        echo -e "$new_name\t$full_name" >> "$mapping"
     else
         echo "$line" >> "$output"
     fi
