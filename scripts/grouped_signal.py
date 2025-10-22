@@ -33,4 +33,3 @@ df = pd.DataFrame(data_padded, index=row_labels)
 # Save to TSV with proper column headers
 df.columns = [f"pos_{i}" for i in range(df.shape[1])]
 df.to_csv("/home/abportillo/github_repo/Aging/motif_binding/grouped_signal_matrix.tsv", sep="\t")
-``
