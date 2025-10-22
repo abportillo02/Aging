@@ -25,16 +25,17 @@ for interval in bed:
 # --- Load ChIP-exo signal BED file ---
 chip_bed = pybedtools.BedTool("/net/nfs-irwrsrchnas01/labs/dschones/bioresearch/qianhui/projects/PMM/chipExo/GSE78099/GSM2466684_ZNF90_peaks_processed_score_signal_exo.bed.gz")
 
-# --- Get signal vector per base ---
+# --- Get signal vector per base (using MACS peak score) ---
 def get_signal_vector(chrom, start, end, chip_bed):
     region = pybedtools.BedTool([pybedtools.create_interval_from_list([chrom, str(start), str(end)])])
     signal = chip_bed.intersect(region, wa=True)
 
-    signal_vector = [0] * (end - start)
+    signal_vector = [0.0] * (end - start)
     for interval in signal:
+        score = float(interval.score)  # Use peak score
         for i in range(interval.start, interval.end):
             if start <= i < end:
-                signal_vector[i - start] += 1
+                signal_vector[i - start] += score
     return signal_vector
 
 # --- Map signal to aligned sequence ---
@@ -69,6 +70,11 @@ for i, seq_id in enumerate(aligned_sequences):
 
     signal_matrix[seq_id] = aligned_signal
 
+# --- Diagnostic: Check signal distribution ---
+all_signals = [val for row in signal_matrix.values() for val in row]
+print(f"Non-zero positions: {sum(1 for v in all_signals if v > 0)}")
+print(f"Max score: {max(all_signals)}")
+print(f"Mean score: {sum(all_signals)/len(all_signals):.2f}")
 
 # Save signal matrix to a file
 with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix.json", "w") as f:
