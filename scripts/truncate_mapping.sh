@@ -7,23 +7,15 @@ mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
 > "$output"
 > "$mapping"
 
-declare -A name_count
+count=1
 
 while read line; do
     if [[ "$line" == ">"* ]]; then
         full=${line#>}
-        family=$(echo "$full" | cut -d'_' -f1 | sed 's/LTR//')
-        chr=$(echo "$full" | grep -o 'chr[^_]*' | sed 's/chr//')
-
-        base="${family}_c${chr}"
-        count=${name_count[$base]:-1}
-        name_count[$base]=$((count + 1))
-
-        short="${base}${count}"
-        short="${short:0:10}"  # final truncation to 10 characters
-
+        short=$(printf "seq%04d" $count)
         echo ">$short" >> "$output"
         echo -e "$short\t$full" >> "$mapping"
+        count=$((count + 1))
     else
         echo "$line" >> "$output"
     fi
