@@ -39,6 +39,7 @@ def get_signal_vector(chrom, start, end, chip_bed):
     return signal_vector
 
 
+
 #  Map signal to aligned sequence 
 def map_signal_to_alignment(aligned_seq, signal_vector):
     aligned_signal = []
