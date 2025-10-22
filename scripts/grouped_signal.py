@@ -2,7 +2,7 @@ import json
 import pandas as pd
 
 # --- Load signal matrix and mapping ---
-with open("signal_matrix.json") as f:
+with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix.json") as f:
     signal_matrix = json.load(f)
 
 mapping = {}
@@ -24,4 +24,4 @@ for seq_id, signal in signal_matrix.items():
 
 # --- Convert to DataFrame and save ---
 df = pd.DataFrame(data, index=row_labels)
-df.to_csv("grouped_signal_matrix.tsv", sep="\t")
+df.to_csv("/home/abportillo/github_repo/Aging/motif_binding/grouped_signal_matrix.tsv", sep="\t")
