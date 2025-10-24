@@ -21,10 +21,10 @@ while IFS= read -r sample_name; do
   echo "Creating bash script for sample_name: $sample_name"
   ## data path
   ## we can soft-link all data to a data folder, so we can use it more conveniently
-  datapath_aging=/home/abportillo/github_repo/Aging/fastq
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess
-  mkdir -p /home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
-  outdir=/home/abportillo/github_repo/Aging/fastq/rnapreprocess/${sample_name}
+  datapath_aging=/home/abportillo/github_repo/Aging/chip-fastq
+  mkdir -p /home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess
+  mkdir -p /home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/${sample_name}
+  outdir=/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/${sample_name}
   
   
   java=/home/abportillo/.conda/envs/mamba_abner_BC/bin/java
@@ -36,7 +36,7 @@ while IFS= read -r sample_name; do
 
   {
     echo -e "#!/bin/bash
-#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_bigwig
+#SBATCH --job-name=${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_chip
 #SBATCH --mail-type=END,FAIL
 #SBATCH --mail-user=abportillo@coh.org
 #SBATCH -n 16 # Number of cores
@@ -44,71 +44,71 @@ while IFS= read -r sample_name; do
 #SBATCH -p all
 #SBATCH --mem=150G
 #SBATCH --time=48:00:00
-#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_bigwig_%j.log
+#SBATCH --output=${outdir}/${sample_name}_RNA_hg38_p14_2passStar_sameAsMMRFpipe_chip_%j.log
 
-# source /home/abportillo/.bashrc
-# conda activate /home/abportillo/.conda/envs/mamba_abner_BC
+source /home/abportillo/.bashrc
+conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
-# #### fastqc for fastq files
-# mkdir -p ${outdir}/fastqc_out
-# module load FastQC/0.11.8
-# fastqc -t 8 -o ${outdir}/fastqc_out \
-# ${datapath_aging}/${sample_name}.fastq
+#### fastqc for fastq files
+mkdir -p ${outdir}/fastqc_out
+module load FastQC/0.11.8
+fastqc -t 8 -o ${outdir}/fastqc_out \
+${datapath_aging}/${sample_name}.fastq
 
-# module unload FastQC/0.11.8
-# ### Align reads with STAR:
-# ${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/output/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
-# --readFilesIn ${datapath_aging}/${sample_name}.fastq  \
-# --runThreadN 8 \
-# --twopassMode Basic \
-# --outFilterMultimapNmax 20 \
-# --alignSJoverhangMin 8 \
-# --alignSJDBoverhangMin 1 \
-# --outFilterMismatchNmax 999 \
-# --outFilterMismatchNoverLmax 0.1 \
-# --alignIntronMin 20 \
-# --alignIntronMax 1000000 \
-# --alignMatesGapMax 1000000 \
-# --outFilterType BySJout \
-# --outFilterScoreMinOverLread 0.33 \
-# --outFilterMatchNminOverLread 0.33 \
-# --limitSjdbInsertNsj 1200000 \
-# --outFileNamePrefix ${outdir}/${sample_name}_ \
-# --outSAMstrandField intronMotif \
-# --outFilterIntronMotifs None \
-# --alignSoftClipAtReferenceEnds Yes \
-# --quantMode TranscriptomeSAM GeneCounts \
-# --outSAMtype BAM Unsorted \
-# --outSAMunmapped Within \
-# --genomeLoad NoSharedMemory \
-# --chimSegmentMin 15 \
-# --chimJunctionOverhangMin 15 \
-# --chimOutType Junctions SeparateSAMold WithinBAM SoftClip \
-# --chimOutJunctionFormat 1 \
-# --chimMainSegmentMultNmax 1 \
-# --outSAMattributes NH HI AS nM NM ch
+module unload FastQC/0.11.8
+### Align reads with STAR:
+${STAR} --genomeDir /home/abportillo/github_repo/RNA_seq_Bcell/output/raw_fastq_bcell/rnaPreprocess/hg38_p14/STAR_hg38_p14_geneCodeGTF_filter \
+--readFilesIn ${datapath_aging}/${sample_name}.fastq  \
+--runThreadN 8 \
+--twopassMode Basic \
+--outFilterMultimapNmax 20 \
+--alignSJoverhangMin 8 \
+--alignSJDBoverhangMin 1 \
+--outFilterMismatchNmax 999 \
+--outFilterMismatchNoverLmax 0.1 \
+--alignIntronMin 20 \
+--alignIntronMax 1000000 \
+--alignMatesGapMax 1000000 \
+--outFilterType BySJout \
+--outFilterScoreMinOverLread 0.33 \
+--outFilterMatchNminOverLread 0.33 \
+--limitSjdbInsertNsj 1200000 \
+--outFileNamePrefix ${outdir}/${sample_name}_ \
+--outSAMstrandField intronMotif \
+--outFilterIntronMotifs None \
+--alignSoftClipAtReferenceEnds Yes \
+--quantMode TranscriptomeSAM GeneCounts \
+--outSAMtype BAM Unsorted \
+--outSAMunmapped Within \
+--genomeLoad NoSharedMemory \
+--chimSegmentMin 15 \
+--chimJunctionOverhangMin 15 \
+--chimOutType Junctions SeparateSAMold WithinBAM SoftClip \
+--chimOutJunctionFormat 1 \
+--chimMainSegmentMultNmax 1 \
+--outSAMattributes NH HI AS nM NM ch
 
-# #--outSAMattrRGline ID:sample1 SM:sample1 PL:ILLUMINA LB:lib1 PU:unit1; not sure lib info. so leave it out
-# #--outFilterMismatchNmax 10, not use in R1 and R2 because:
-# # other para. covered this filtering, the default value is unlimited
-# #--outFilterMultimapNmax 100, for repeat, not use in this round
-# #--winAnchorMultimapNmax 100, for repeat, not use in this round
-# # --outSAMmultNmax 25, for allo, not use in this round
+#--outSAMattrRGline ID:sample1 SM:sample1 PL:ILLUMINA LB:lib1 PU:unit1; not sure lib info. so leave it out
+#--outFilterMismatchNmax 10, not use in R1 and R2 because:
+# other para. covered this filtering, the default value is unlimited
+#--outFilterMultimapNmax 100, for repeat, not use in this round
+#--winAnchorMultimapNmax 100, for repeat, not use in this round
+# --outSAMmultNmax 25, for allo, not use in this round
 
-# # ### sort by coordinates, Remove duplicates and sort
+# ### sort by coordinates, Remove duplicates and sort
 
-# ${samtools} sort -@ 8 -O bam -o ${outdir}/${sample_name}_sorted.bam ${outdir}/${sample_name}_Aligned.out.bam
-# ${samtools} index ${outdir}/${sample_name}_sorted.bam
-# rm ${outdir}/${sample_name}_Aligned.out.bam
+${samtools} sort -@ 8 -O bam -o ${outdir}/${sample_name}_sorted.bam ${outdir}/${sample_name}_Aligned.out.bam
+${samtools} index ${outdir}/${sample_name}_sorted.bam
+rm ${outdir}/${sample_name}_Aligned.out.bam
 
-### sort by coordinates, Remove duplicates and sort
+## sort by coordinates, Remove duplicates and sort
 
-# module load picard/2.21.1
-# picard MarkDuplicates \\
-#     I=${outdir}/${sample_name}_sorted.bam \\
-#     O=${outdir}/${sample_name}_nr_sorted.bam  \\
-#     M=${outdir}/${sample_name}_picardStats.txt \\
-#     REMOVE_DUPLICATES=true 
+module load picard/2.21.1
+picard MarkDuplicates \\
+    I=${outdir}/${sample_name}_sorted.bam \\
+    O=${outdir}/${sample_name}_nr_sorted.bam  \\
+    M=${outdir}/${sample_name}_picardStats.txt \\
+    REMOVE_DUPLICATES=true 
    
 picard AddOrReplaceReadGroups \
     -I ${outdir}/${sample_name}_sorted.bam \
