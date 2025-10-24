@@ -14,9 +14,9 @@ source /home/abportillo/.bashrc
 conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 BEDTOOLS="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
-REFERENCE_FASTA="/home/abportillo/genomes/hg19/hg19.fa"
-MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_ltrs_labeled_named.bed"
-OUTDIR="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.fasta"
+REFERENCE_FASTA="/home/abportillo/genomes/hg38/hg38_p14.fa"
+MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_HERVH_LTR7up_hg38.bed" # only change this and pipeline should run smoothly
+OUTDIR="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.fasta" ## will overwrite the past analysis but much easier for me 
 
 ${BEDTOOLS} getfasta -fi ${REFERENCE_FASTA} -bed ${MERGED_BED} -fo ${OUTDIR} -name
 

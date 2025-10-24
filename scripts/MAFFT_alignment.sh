@@ -18,5 +18,5 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 mafft="/home/abportillo/.conda/envs/mamba_abner_BC/bin/mafft"
 
 # Run MAFFT with input and output files explicitly
-${mafft} --auto --thread 16 /home/abportillo/github_repo/Aging/mafft/cleaned_ltr7up_hervh.fasta \
+${mafft} --auto --thread 16 /home/abportillo/github_repo/Aging/mafft/ltr7up_hervh.fasta \
 > /home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta
