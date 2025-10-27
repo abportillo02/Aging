@@ -9,14 +9,17 @@ output_fasta = os.path.join(output_dir, "ltr7up_hervh_aligned_int.fasta")
 mapping_file = os.path.join(output_dir, "name_mapping.tsv")
 
 with open(input_fasta) as infile, open(output_fasta, "w") as outfile, open(mapping_file, "w") as mapfile:
-    count = 1
+    counters = {}
 
     for record in SeqIO.parse(infile, "fasta"):
         full_header = record.description
-        new_id = f"seq{count:04d}"
-        count += 1
-
+        repeat_name = full_header.split("::")[0]
+        count = counters.get(repeat_name, 0)
+        new_id = f"{repeat_name}_{count:04d}"
+        counters[repeat_name] = count + 1
         mapfile.write(f"{new_id}\t{full_header}\n")
         record.id = new_id
         record.description = ""
-        SeqIO.write(record, outfile, "fasta")
+
+        # Write manually to preserve exact formatting
+        outfile.write(record.format("fasta"))
