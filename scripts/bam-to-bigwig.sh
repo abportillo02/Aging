@@ -21,11 +21,11 @@ for bam in *_sorted.bam; do
   samtools index "$bam"
 
   bamCoverage \
-    -b "$bam" \
-    -o "/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/${base}.bw" \
-    --binSize 1 \
-    --normalizeUsing CPM \
-    --extendReads \
-    --ignoreDuplicates \
-    --minMappingQuality 30
+  -b "$bam" \
+  -o "/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/${base}.bw" \
+  --binSize 1 \
+  --normalizeUsing CPM \
+  --extendReads 150 \
+  --ignoreDuplicates \
+  --minMappingQuality 30
 done
