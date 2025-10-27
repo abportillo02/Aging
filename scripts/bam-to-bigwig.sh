@@ -29,4 +29,3 @@ for bam in *_sorted.bam; do
     --ignoreDuplicates \
     --minMappingQuality 30
 done
-``
