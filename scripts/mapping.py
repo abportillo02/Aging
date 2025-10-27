@@ -1,6 +1,5 @@
 from Bio import SeqIO
 import os
-
 input_fasta = "/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta"
 output_dir = "/home/abportillo/github_repo/Aging/mafft"
 os.makedirs(output_dir, exist_ok=True)
@@ -18,7 +17,10 @@ with open(input_fasta) as infile, open(output_fasta, "w") as outfile, open(mappi
         new_id = f"{repeat_name}_{count:04d}"
         counters[repeat_name] = count + 1
 
+        # Write mapping: new ID to full original header
         mapfile.write(f"{new_id}\t{full_header}\n")
+
+        # Update only the ID; preserve sequence exactly as-is
         record.id = new_id
         record.description = ""
         SeqIO.write(record, outfile, "fasta")
