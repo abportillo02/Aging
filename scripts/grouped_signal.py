@@ -8,10 +8,10 @@ with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix.json")
 
 # Load mapping
 mapping = {}
-with open("/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv") as f:
+with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv") as f:
     for line in f:
-        seq_id, name = line.strip().split()
-        mapping[seq_id] = name
+        seq_id, subfamily, full_name = line.strip().split()
+        mapping[seq_id] = (subfamily, full_name)
 
 # Build labeled matrix
 data = []
@@ -20,9 +20,9 @@ groups = []
 
 for seq_id, signal in signal_matrix.items():
     if seq_id in mapping:
-        subfamily = mapping[seq_id].split("_")[0]
+        subfamily, _ = mapping[seq_id]
         label = f"{subfamily}_{seq_id}"
-        log_signal = [math.log2(x + 1) for x in signal]  # log normalization
+        log_signal = signal  
         data.append(log_signal)
         row_labels.append(label)
         groups.append(subfamily)
