@@ -7,21 +7,19 @@ from collections import defaultdict
 with open("/home/abportillo/github_repo/Aging/motif_binding/aligned_sequences.json") as f:
     aligned_sequences = json.load(f)
 
-# Load mapping file (seq000X : LTR7up1_chr8)
-mapping = {}
-with open("/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv") as f:
+# Load trimmed mapping file
+seq_to_bed = {}
+with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv") as f:
     for line in f:
-        seq_id, name = line.strip().split()
-        mapping[seq_id] = name
+        seq_id, repeat_family, full_name = line.strip().split()
+        coords = full_name.split("::")[1]
+        chrom, positions = coords.split(":")
+        start, end = map(int, positions.split("-"))
+        seq_to_bed[seq_id] = (chrom, start, end, repeat_family)
 
-# Load BED file with genomic coordinates
+# Load BED file (optional validation)
 bed = pybedtools.BedTool("/home/abportillo/github_repo/Aging/mafft/merged_HERVH_LTR7up_hg38.bed")
-
-# Build lookup: name → list of (chrom, start, end)
-bed_lookup = defaultdict(list)
-for interval in bed:
-    name = interval.name.split(":")[0]
-    bed_lookup[name].append((interval.chrom, interval.start, interval.end))
+bed_set = set((i.chrom, i.start, i.end, i.name) for i in bed)
 
 # Load bigWig ChIP-exo signal file
 bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/SRR5197267.bw")
@@ -30,7 +28,7 @@ bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/
 def get_signal_vector(chrom, start, end, bw):
     try:
         signal = bw.values(chrom, start, end, numpy=False)
-        return [0.0 if v is None else v for v in signal]
+        return [0.0 if v is None else min(v, 30.0) for v in signal]  # saturate at 30
     except RuntimeError:
         return [0.0] * (end - start)
 
@@ -48,21 +46,17 @@ def map_signal_to_alignment(aligned_seq, signal_vector):
                 aligned_signal.append(0.0)
             seq_index += 1
     return aligned_signal
-
 # Build signal matrix
 signal_matrix = {}
-ordered_names = [mapping[seq_id] for seq_id in aligned_sequences]
 
-for i, seq_id in enumerate(aligned_sequences):
-    name = ordered_names[i]
+for seq_id, aligned_seq in aligned_sequences.items():
+    if seq_id not in seq_to_bed:
+        signal_matrix[seq_id] = [0.0] * len(aligned_seq)
+        continue
 
-    if name not in bed_lookup or i >= len(bed_lookup[name]):
-        aligned_signal = [0.0] * len(aligned_sequences[seq_id])
-    else:
-        chrom, start, end = bed_lookup[name][i]
-        signal_vector = get_signal_vector(chrom, start, end, bw)
-        aligned_signal = map_signal_to_alignment(aligned_sequences[seq_id], signal_vector)
-
+    chrom, start, end, repeat_family = seq_to_bed[seq_id]
+    signal_vector = get_signal_vector(chrom, start, end, bw)
+    aligned_signal = map_signal_to_alignment(aligned_seq, signal_vector)
     signal_matrix[seq_id] = aligned_signal
 
 # Diagnostics
