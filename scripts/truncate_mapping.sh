@@ -1,7 +1,7 @@
 #!/bin/bash
 
-input="/home/abportillo/github_repo/Aging/mafft/trimmed_ltr7up_hervh_aligned.fasta"
-output="/home/abportillo/github_repo/Aging/mafft/truncated_names.fasta"
+input="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta"
+output="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned_int.fasta"
 mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
 
 > "$output"
