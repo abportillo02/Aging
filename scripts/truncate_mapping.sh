@@ -13,7 +13,7 @@ while read line; do
     if [[ "$line" == ">"* ]]; then
         full=${line#>}
         short=$(printf "seq%04d" $count)
-        echo ">$full" >> "$output"
+        echo ">$short" >> "$output"
         echo -e "$short\t$full" >> "$mapping"
         count=$((count + 1))
     else
