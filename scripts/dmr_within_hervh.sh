@@ -37,8 +37,8 @@ ${bedtools} intersect -a "$HERVH_SORTED" -b "$DMR_SORTED" -F 1.0 -u > "$HERVH_CO
 echo ">>> Labeling HERVHs as DMR-HERVH..."
 awk 'BEGIN{OFS="\t"} {print $1, $2, $3, "DMR-HERVH"}' "$HERVH_CONTAIN_DMR" > "$FINAL_OUTPUT"
 
-echo ">>> Sorting and removing duplicates..."
-sort -u "$FINAL_OUTPUT" -o "$FINAL_OUTPUT"
+# echo ">>> Sorting and removing duplicates..."
+# sort -u "$FINAL_OUTPUT" -o "$FINAL_OUTPUT"
 
 echo ">>> Done!"
 echo "Output saved as: $FINAL_OUTPUT"
