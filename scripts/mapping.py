@@ -1,11 +1,11 @@
 from Bio import SeqIO
 import os
 
-input_fasta = "/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta"
+input_fasta = "/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh_aligned.fasta"
 output_dir = "/home/abportillo/github_repo/Aging/mafft"
 os.makedirs(output_dir, exist_ok=True)
 
-output_fasta = os.path.join(output_dir, "ltr7up_hervh_aligned_int.fasta")
+output_fasta = os.path.join(output_dir, "dmr_ltr7_hervh_aligned.fasta")
 mapping_file = os.path.join(output_dir, "name_mapping.tsv")
 
 with open(input_fasta) as infile, open(output_fasta, "w") as outfile, open(mapping_file, "w") as mapfile:
