@@ -2,7 +2,7 @@
 # merge bed files in R 
 # get fasta file 
 # run MAFFT 
-# run truncated mapping.sh 
+# run mapping 
 # Trim aligned file 
 # run more mapping 
 # seqmagick convert aligned.fasta to phy
