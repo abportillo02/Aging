@@ -15,8 +15,8 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 BEDTOOLS="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 REFERENCE_FASTA="/home/abportillo/genomes/hg38/hg38_p14.fa"
-MERGED_BED="/home/abportillo/github_repo/Aging/mafft/merged_DMR_LTR_HERVH_hg38.bed" # only change this and pipeline should run smoothly
-OUTDIR="/home/abportillo/github_repo/Aging/mafft/dmr_ltr7up_hervh.fasta" 
+MERGED_BED="/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh.bed" # only change this and pipeline should run smoothly
+OUTDIR="/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh.fasta" 
 
 ${BEDTOOLS} getfasta -fi ${REFERENCE_FASTA} -bed ${MERGED_BED} -fo ${OUTDIR} -name
 
