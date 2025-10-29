@@ -3,12 +3,12 @@ import pandas as pd
 import math
 
 # Load signal matrix
-with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_75D.json") as f:
+with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_90.json") as f:
     signal_matrix = json.load(f)
 
 # Load mapping
 mapping = {}
-with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv") as f:
+with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping_all.tsv") as f:
     for line in f:
         seq_id, subfamily, full_name = line.strip().split()
         mapping[seq_id] = (subfamily, full_name)
@@ -43,6 +43,6 @@ df.columns = [f"pos_{i}" for i in range(df.shape[1])]
 df['group'] = groups  # Add group column
 
 # Save to TSV
-df.to_csv("/home/abportillo/github_repo/Aging/motif_binding/grouped_signal_matrix_75D.tsv", sep="\t")
+df.to_csv("/home/abportillo/github_repo/Aging/motif_binding/grouped_signal_matrix_90.tsv", sep="\t")
 
 print("Grouped and log-normalized signal matrix saved.")

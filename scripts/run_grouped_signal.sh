@@ -16,4 +16,4 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 
 # Run Python script
-python grouped_signal.py
+python /home/abportillo/github_repo/Aging/scripts/grouped_signal.py
