@@ -19,7 +19,7 @@ bedtools="/home/abportillo/.conda/envs/mamba_abner_BC/bin/bedtools"
 
 # Input files
 DMR_FILE="${outdir}/HERVH-DMRs_hg38.bed"
-HERVH_FILE="${outdir}/all_HERVH.bed"
+HERVH_FILE="/home/abportillo/github_repo/seq-align/all_HERVH.bed"
 
 # Output files
 DMR_SORTED="${outdir}/HERVH-DMRs_hg38.sorted.bed"
