@@ -2,10 +2,10 @@ from Bio import SeqIO
 import pandas as pd
 
 # Input files
-trimmed_fasta = "/home/abportillo/github_repo/Aging/mafft/trimmed_ltr7up_hervh_aligned.fasta"
-original_mapping = "/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
-output_fasta = "/home/abportillo/github_repo/Aging/mafft/trimmed_ltr7up_hervh_aligned_unique.fasta"
-output_mapping = "/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv"
+trimmed_fasta = "/home/abportillo/github_repo/Aging/mafft/trimmed_dmr_ltr7_hervh_aligned.fasta"
+original_mapping = "/home/abportillo/github_repo/Aging/mafft/name_mapping_all.tsv"
+output_fasta = "/home/abportillo/github_repo/Aging/mafft/trimmed_dmr_ltr7_hervh_aligned_unique.fasta"
+output_mapping = "/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping_all.tsv"
 
 # Load original mapping: seqXXXX -> full header
 orig_map = pd.read_csv(original_mapping, sep="\t", header=None, names=["short", "original"])

@@ -1,8 +1,8 @@
 #!/bin/bash
 
-input="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned.fasta"
-output="/home/abportillo/github_repo/Aging/mafft/ltr7up_hervh_aligned_int.fasta"
-mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping.tsv"
+input="/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh_aligned.fasta"
+output="/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh_aligned_int.fasta"
+mapping="/home/abportillo/github_repo/Aging/mafft/name_mapping_all.tsv"
 
 > "$output"
 > "$mapping"
