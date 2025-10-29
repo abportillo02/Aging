@@ -16,5 +16,5 @@ conda activate /home/abportillo/.conda/envs/mamba_abner_BC
 
 
 # Run Python script
-python map_to_matrix.py
+python /home/abportillo/github_repo/Aging/scripts/map_to_matrix.py
 

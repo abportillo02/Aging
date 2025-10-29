@@ -9,7 +9,7 @@ with open("/home/abportillo/github_repo/Aging/motif_binding/aligned_sequences.js
 
 # Load trimmed mapping file
 seq_to_bed = {}
-with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv") as f:
+with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping_all.tsv") as f:
     for line in f:
         seq_id, repeat_family, full_name = line.strip().split()
         coords = full_name.split("::")[1]
@@ -18,11 +18,11 @@ with open("/home/abportillo/github_repo/Aging/mafft/trimmed_name_mapping.tsv") a
         seq_to_bed[seq_id] = (chrom, start, end, repeat_family)
 
 # Load BED file (optional validation)
-bed = pybedtools.BedTool("/home/abportillo/github_repo/Aging/mafft/merged_HERVH_LTR7up_hg38.bed")
+bed = pybedtools.BedTool("/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_hervh.bed")
 bed_set = set((i.chrom, i.start, i.end, i.name) for i in bed)
 
 # Load bigWig ChIP-exo signal file
-bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/SRR5197232.bw")
+bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/SRR5197267.bw")
 
 # Get signal vector per base from bigWig
 def get_signal_vector(chrom, start, end, bw):
@@ -66,8 +66,8 @@ print(f"Max score: {max(all_signals)}")
 print(f"Mean score: {sum(all_signals)/len(all_signals):.2f}")
 
 # Save signal matrix
-with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_75D.json", "w") as f:
+with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_90.json", "w") as f:
     json.dump(signal_matrix, f, indent=2)
 
 bw.close()
-print("Signal matrix saved to motif_binding/signal_matrix_75D.json")
+print("Signal matrix saved to motif_binding/signal_matrix_90.json")
