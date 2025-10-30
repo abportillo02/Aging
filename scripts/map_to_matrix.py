@@ -22,7 +22,7 @@ bed = pybedtools.BedTool("/home/abportillo/github_repo/Aging/mafft/dmr_ltr7_herv
 bed_set = set((i.chrom, i.start, i.end, i.name) for i in bed)
 
 # Load bigWig ChIP-exo signal file
-bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/SRR5197267.bw")
+bw = pyBigWig.open("/home/abportillo/github_repo/Aging/chip-fastq/rnapreprocess/bigwig/SRR5197232.bw")
 
 # Get signal vector per base from bigWig
 def get_signal_vector(chrom, start, end, bw):
@@ -66,8 +66,8 @@ print(f"Max score: {max(all_signals)}")
 print(f"Mean score: {sum(all_signals)/len(all_signals):.2f}")
 
 # Save signal matrix
-with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_90.json", "w") as f:
+with open("/home/abportillo/github_repo/Aging/motif_binding/signal_matrix_75D.json", "w") as f:
     json.dump(signal_matrix, f, indent=2)
 
 bw.close()
-print("Signal matrix saved to motif_binding/signal_matrix_90.json")
+print("Signal matrix saved to motif_binding/signal_matrix_75D.json")
